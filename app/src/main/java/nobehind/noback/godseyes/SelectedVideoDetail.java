@@ -19,30 +19,21 @@ public class SelectedVideoDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_video_detail);
 
-        VideoView vView = (VideoView)findViewById(R.id.vdvSelectedCam);
+        final VideoView vView = (VideoView)findViewById(R.id.vdvSelectedCam);
 
         vView.setVideoURI(Uri.parse(VIDEO_URL));
 
-        MediaController mCtrl = new MediaController(this);
+        final MediaController mCtrl = new MediaController(this);
         vView.setMediaController(mCtrl);
 
-        vView.requestFocus();
+        vView.start();
 
-        vView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        vView.postDelayed(new Runnable() {
             @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-
+            public void run() {
+                mCtrl.show(0);
+                vView.pause();
             }
-        });
-
-        vView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-
-            }
-        });
-
-
-
+        }, 100);
     }
 }
